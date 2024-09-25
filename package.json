@@ -1,0 +1,29 @@
+{
+  "name": "projeto-gerenciamento-de-patrimonios-numbers",
+  "version": "1.0.0",
+  "description": "Projeto de estágio obrigatório do 3º Técnico em Informática no Laboratório NumbERS. Consiste em construir um software para gerenciamento do patrimônio deste núcleo.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "nodemon": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NumbERS-IFG/Projeto-Gerenciamento-de-Patrimonios-NumbERS.git"
+  },
+  "keywords": [
+    "patrimonio",
+    "nodejs",
+    "postgresql"
+  ],
+  "author": "Guilherme Henrique Souza da Silva",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NumbERS-IFG/Projeto-Gerenciamento-de-Patrimonios-NumbERS/issues"
+  },
+  "homepage": "https://github.com/NumbERS-IFG/Projeto-Gerenciamento-de-Patrimonios-NumbERS#readme",
+  "dependencies": {
+    "postgresql": "^0.0.1"
+  }
+}
