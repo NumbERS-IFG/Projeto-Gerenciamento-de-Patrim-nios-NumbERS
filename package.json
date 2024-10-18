@@ -1,6 +1,6 @@
 {
-  "name": "projeto-gerenciamento-de-patrimonios-numbers",
-  "version": "1.0.0",
+  "name": "projeto-gpatri",
+  "version": "1.0.1",
   "description": "Projeto de estágio obrigatório do 3º Técnico em Informática no Laboratório NumbERS. Consiste em construir um software para gerenciamento do patrimônio deste núcleo.",
   "main": "app.js",
   "scripts": {
