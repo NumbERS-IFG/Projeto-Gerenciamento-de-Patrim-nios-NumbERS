@@ -1,5 +1,5 @@
 const pgp = require('pg-promise')();
-const connectionString = 'postgresql://aluno:aluno123@localhost/gerenciamento-acesso-patrimonio';
+const connectionString = 'postgresql://user:password@localhost/database-name';
 
 const db = pgp(connectionString);
 
