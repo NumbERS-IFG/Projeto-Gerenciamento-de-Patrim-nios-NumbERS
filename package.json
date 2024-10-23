@@ -2,11 +2,11 @@
   "name": "projeto-gpatri",
   "version": "1.0.1",
   "description": "Projeto de estágio obrigatório do 3º Técnico em Informática no Laboratório NumbERS. Consiste em construir um software para gerenciamento do patrimônio deste núcleo.",
-  "main": "app.js",
+  "main": "app/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./src/main/nodejs/br/com/numbersapp/server.js",
-    "nodemon": "nodemon ./src/main/nodejs/br/com/numbersapp/server.js"
+    "start": "node app/server.js",
+    "nodemon": "nodemon app/server.js"
   },
   "repository": {
     "type": "git",
