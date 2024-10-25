@@ -1,5 +1,7 @@
+const db = require("../database/conexaoBD");
+
 class Projeto {
-    constructor(projId=null, nome, areaPesquisa="", tipoProjeto, descricao="") {
+    constructor(projId, nome, areaPesquisa, tipoProjeto, descricao) {
         this.projId = projId;
         this.nome = nome;
         this.areaPesquisa = areaPesquisa;
@@ -7,44 +9,30 @@ class Projeto {
         this.descricao = descricao;
     }
 
-    get projId() {
-        return this.projId;
+    static async findAll() {
+        let sql = "SELECT * FROM projetos";
+        return await db.manyOrNone(sql);
     }
 
-    set projId(value) {
-        this.projId = value;
+    static async findById(id) {
+        let sql = "SELECT * FROM projetos WHERE id_projeto = $1";
+        return await db.oneOrNone(sql, id);
     }
 
-    get nome() {
-        return this.nome;
+    static async save(nome, areaPesquisa, tipoProjeto, descricao){
+        let sql = "INSERT INTO projetos (nome, areapesquisa, tipoprojeto, descricao) VALUES ($1, $2, $3, $4) RETURNING id_projeto";
+        let result = await db.oneOrNone(sql, [nome, areaPesquisa, tipoProjeto, descricao]);
+        return result;
     }
 
-    set nome(value) {
-        this.nome = value;
+    static async update(nome, areaPesquisa, tipoProjeto, descricao, id){
+        let sql = "UPDATE projetos SET nome = $1, areapesquisa = $2, tipoprojeto = $3, descricao = $4 WHERE id_projeto = $5";
+        await db.oneOrNone(sql, [nome, areaPesquisa, tipoProjeto, descricao, id]);
     }
 
-    get areaPesquisa() {
-        return this.areaPesquisa;
-    }
-
-    set areaPesquisa(value) {
-        this.areaPesquisa = value;
-    }
-
-    get tipoProjeto() {
-        return this.tipoProjeto;
-    }
-
-    set tipoProjeto(value) {
-        this.tipoProjeto = value;
-    }
-
-    get descricao() {
-        return this.descricao;
-    }
-
-    set descricao(value) {
-        this.descricao = value;
+    static async delete(id) {
+        let sql = "DELETE FROM projetos WHERE id_projeto = $1";
+        await db.oneOrNone(sql, id);
     }
 }
 

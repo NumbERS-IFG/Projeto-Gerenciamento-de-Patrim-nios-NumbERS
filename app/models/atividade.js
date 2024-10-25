@@ -1,32 +1,36 @@
+const db = require("../database/conexaoBD");
+
 class Atividade {
-    constructor(ativId=null, nome, descricao="") {
+    constructor(ativId, nome, descricao) {
         this.ativId = ativId;
         this.nome = nome;
         this.descricao = descricao;
     }
 
-    get ativId() {
-        return this.ativId;
+    static async findAll() {
+        let sql = "SELECT * FROM atividades";
+        return await db.manyOrNone(sql);
     }
 
-    set ativId(value) {
-        this.ativId = value;
+    static async findById(id) {
+        let sql = "SELECT * FROM atividades WHERE id_atividade = $1";
+        return await db.oneOrNone(sql, id);
     }
 
-    get nome() {
-        return this.nome;
+    static async save(nome, descricao){
+        let sql = "INSERT INTO atividades (nome, descricao) VALUES ($1, $2) RETURNING id_atividade";
+        let result = await db.oneOrNone(sql, [nome, descricao]);
+        return result;
     }
 
-    set nome(value) {
-        this.nome = value;
+    static async update(nome, descricao, id){
+        let sql = "UPDATE atividades SET nome = $1, descricao = $2 WHERE id_atividade = $3";
+        await db.oneOrNone(sql, [nome, descricao, id]);
     }
 
-    get descricao() {
-        return this.descricao;
-    }
-
-    set descricao(value) {
-        this.descricao = value;
+    static async delete(id) {
+        let sql = "DELETE FROM atividades WHERE id_atividade = $1";
+        await db.oneOrNone(sql, id);
     }
 }
 

@@ -1,4 +1,3 @@
-const db = require("../database/conexaoBD");
 const Usuario = require("../models/usuario");
 
 class UsuarioController {

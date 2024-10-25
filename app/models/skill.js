@@ -1,23 +1,35 @@
+const db = require("../database/conexaoBD");
+
 class Skill {
-    constructor(skillId=null, skill) {
+    constructor(skillId, skill) {
         this.skillId = skillId;
         this.skill = skill;
     }
 
-    get skillId() {
-        return this.skillId;
+    static async findAll() {
+        let sql = "SELECT * FROM skills";
+        return await db.manyOrNone(sql);
     }
 
-    set skillId(value) {
-        this.skillId = value;
+    static async findById(id) {
+        let sql = "SELECT * FROM skills WHERE id_skill = $1";
+        return await db.oneOrNone(sql, id);
     }
 
-    get skill() {
-        return this.skill;
+    static async save(skill){
+        let sql = "INSERT INTO skills (skill) VALUES ($1) RETURNING id_skill";
+        let result = await db.oneOrNone(sql, [skill]);
+        return result;
     }
 
-    set skill(value) {
-        this.skill = value;
+    static async update(skill, id){
+        let sql = "UPDATE skills SET skill = $1 WHERE id_skill = $2";
+        await db.oneOrNone(sql, [skill, id]);
+    }
+
+    static async delete(id) {
+        let sql = "DELETE FROM skills WHERE id_skill = $1";
+        await db.oneOrNone(sql, id);
     }
 }
 
