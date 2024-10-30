@@ -1,4 +1,7 @@
 const Usuario = require("../models/usuario");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 class UsuarioController {
     //LISTA TODOS OS ELEMENTOS
@@ -11,26 +14,52 @@ class UsuarioController {
         }
     }
 
-    //LISTA DE ACORDO COM ID
+    //LISTA USUÁRIOS DE ACORDO COM A MATRICULA
     async show(req, res) {
         try {
-            let usuario = await Usuario.findById(req.params.id);
+            let usuario = await Usuario.findByMatricula(req.params.matricula);
             return res.status(200).json(usuario);
         } catch (error) {
             res.status(404).json({mensagem: "Não foi possível encontrar o usuário.", detalhes: error});
         }
     }
 
-        //INSERE ELEMENTOS
-    async store(req, res) {
+    //REGISTRA USUÁRIOS
+    async register(req, res) {
         const { nome, sobrenome, matricula, senha, cargo, email = null, cpf = null } = req.body;
+        if (!nome || !sobrenome || !matricula || !senha)
+            return res.status(400).json({mensagem: "Os campos 'Nome', 'Sobrenome', 'Matricula' e 'Senha' são obrigatórios."});
+
+        const userExists = await Usuario.findByMatricula(matricula);
+        if (userExists)
+            return res.status(400).json({mensagem: "Usuário existente."});
 
         try {
-            let id = await Usuario.save(nome, sobrenome, matricula, senha, cargo, email, cpf);
-            res.status(201).json({mensagem: "Usuário inserido com sucesso!", "id": id});
+            const user = new Usuario({nome, sobrenome, matricula, senha, cargo, email, cpf});
+            user.senha = bcrypt.hashSync(user.senha, 10);
+            let id = await Usuario.save(user);
+            res.status(201).json({mensagem: "Usuário inserido com sucesso!", id: id});
         } catch (error) {
-            res.status(406).json({mensagem: "Erro ao inserir usuário.", detalhes: error})
+            res.status(406).json({mensagem: "Erro ao inserir usuário.", detalhes: error});
         }
+    }
+
+    async login(req, res){
+        const { matricula, senha } = req.body;
+        if (!matricula || !senha)
+            return res.status(400).json({mensagem: "Os campos 'Matricula' e 'Senha' são obrigatórios."});
+
+        const user = await Usuario.findByMatricula(matricula);
+        if (!user)
+            return res.status(400).json({mensagem: "Usuário não encontrado."});
+
+        const samePassword = await bcrypt.compare(senha, user.senha);
+        if (!samePassword)
+            return res.status(400).json({mensagem: "Senha incorreta."});
+
+        const token = jwt.sign({id: user.usuarioId, matricula: user.matricula}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "1h"});
+        user.senha = undefined;
+        res.status(200).json({ chaveAcesso: token, usuario: user });
     }
 
     //ATUALIZA ELEMENTOS

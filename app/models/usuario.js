@@ -1,15 +1,14 @@
 const db = require('../database/conexaoBD');
 
 class Usuario {
-    constructor(nome, sobrenome, matricula, senha, cargo) {
+    constructor({ nome, sobrenome, matricula, senha, cargo, email, cpf }) {
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.matricula = matricula;
         this.senha = senha;
         this.cargo = cargo;
-        this.email = null;
-        this.cpf = null;
-        this.userId = null;
+        this.email = email;
+        this.cpf = cpf;
     }
 
     static async findAll() {
@@ -17,14 +16,22 @@ class Usuario {
         return await db.manyOrNone(sql);
     }
 
-    static async findById(id) {
-        let sql = "SELECT * FROM usuarios WHERE id_usuario = $1";
-        return await db.oneOrNone(sql, id);
+    static async findByMatricula(matricula) {
+        let sql = "SELECT * FROM usuarios WHERE matricula = $1";
+        return await db.oneOrNone(sql, matricula);
     }
 
-    static async save(nome, sobrenome, matricula, senha, cargo, email, cpf){
+    static async save(user){
         let sql = "INSERT INTO usuarios (nome, sobrenome, matricula, senha, email, cargo, cpf) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id_usuario";
-        let result = await db.oneOrNone(sql, [nome, sobrenome, matricula, senha, email, cargo, cpf]);
+        let result = await db.oneOrNone(sql, [
+            user.nome,
+            user.sobrenome,
+            user.matricula,
+            user.senha,
+            user.email,
+            user.cargo,
+            user.cpf
+        ]);
         return result;
     }
 

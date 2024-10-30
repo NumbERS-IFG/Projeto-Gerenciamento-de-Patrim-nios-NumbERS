@@ -6,9 +6,11 @@ const usuarioController = new UsuarioController();
 //CONSULTA TODOS ELEMENTOS
 router.get('/', usuarioController.index);
 //CONSULTA UM ELEMENTO PELO ID
-router.get('/show/:id', usuarioController.show);
+router.get('/show/:matricula', usuarioController.show);
 //INSERE ELEMENTOS
-router.post('/store', usuarioController.store);
+router.post('/register', usuarioController.register);
+//PERMITE LOGIN DO USUÁRIO
+router.post('/login', usuarioController.login);
 //ATUALIZA ELEMENTOS
 router.put('/:id', usuarioController.update);
 //ELIMINA ELEMENTOS
