@@ -1,17 +1,19 @@
 const CondicaoController = require('../controllers/condicaoController');
+const AuthController = require('../controllers/authController');
 const express =require('express');
 const router = express.Router();
 const condicaoController = new CondicaoController();
+const authController = new AuthController();
 
 //CONSULTA TODOS ELEMENTOS
-router.get('/', condicaoController.index);
+router.get('/', authController.authToken, condicaoController.index);
 //CONSULTA UM ELEMENTO PELO ID
-router.get('/show/:id', condicaoController.show);
+router.get('/show/:id', authController.authToken, condicaoController.show);
 //INSERE ELEMENTOS
-router.post('/store', condicaoController.store);
+router.post('/store', authController.authToken, condicaoController.store);
 //ATUALIZA ELEMENTOS
-router.put('/:id', condicaoController.update);
+router.put('/:id', authController.authToken, condicaoController.update);
 //ELIMINA ELEMENTOS
-router.delete('/delete/:id', condicaoController.delete);
+router.delete('/delete/:id', authController.authToken, condicaoController.delete);
 
 module.exports = router;

@@ -44,24 +44,6 @@ class UsuarioController {
         }
     }
 
-    async login(req, res){
-        const { matricula, senha } = req.body;
-        if (!matricula || !senha)
-            return res.status(400).json({mensagem: "Os campos 'Matricula' e 'Senha' são obrigatórios."});
-
-        const user = await Usuario.findByMatricula(matricula);
-        if (!user)
-            return res.status(400).json({mensagem: "Usuário não encontrado."});
-
-        const samePassword = await bcrypt.compare(senha, user.senha);
-        if (!samePassword)
-            return res.status(400).json({mensagem: "Senha incorreta."});
-
-        const token = jwt.sign({id: user.usuarioId, matricula: user.matricula}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "1h"});
-        user.senha = undefined;
-        res.status(200).json({ chaveAcesso: token, usuario: user });
-    }
-
     //ATUALIZA ELEMENTOS
     async update(req, res) {
         const { nome, sobrenome, matricula, senha, cargo, email = null, cpf = null } = req.body;
@@ -85,6 +67,12 @@ class UsuarioController {
         } catch (error) {
             res.status(406).json({mensagem: "Erro ao excluir usuário", detalhes: error});
         }
+    }
+
+    async authToken(token) {
+        const decoded = await jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+        const user = await Usuario.findByMatricula(decoded.matricula);
+        return user;
     }
 }
 

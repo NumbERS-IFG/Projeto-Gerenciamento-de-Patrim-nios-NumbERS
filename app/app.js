@@ -7,6 +7,7 @@ const projeto = require('./routes/projeto.routes');
 const situacao = require('./routes/situacao.routes');
 const skill = require('./routes/skill.routes');
 const usuario = require('./routes/usuario.routes');
+const login = require('./routes/login.routes');
 const express = require('express');
 const app = express();
 
@@ -22,5 +23,6 @@ app.use('/projeto', projeto);
 app.use('/situacao', situacao);
 app.use('/skill', skill);
 app.use('/usuario', usuario);
+app.use('/login', login);
 
 module.exports = app;
