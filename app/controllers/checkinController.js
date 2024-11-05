@@ -23,10 +23,13 @@ class CheckinsController {
 
     //INSERE ELEMENTOS
     async store(req, res) {
-        const { checkins = null } = req.body;
+        const { data, horario, usuarioId } = req.body;
+        if (!data || !horario || !usuarioId)
+            return res.status(400).json({mensagem: "Todos os campos são obrigatórios."})
 
         try {
-            let id = await Checkins.save(checkins);
+            const checkin = new Checkins({data, horario, usuarioId});
+            let id = await Checkins.save(checkin);
             res.status(201).json({mensagem: "Checkin inserido com sucesso!", "id": id});
         } catch (error) {
             res.status(406).json({mensagem: "Erro ao inserir checkin.", detalhes: error});
@@ -35,11 +38,14 @@ class CheckinsController {
 
     //ATUALIZA ELEMENTOS
     async update(req, res) {
-        const { checkins = null } = req.body;
+        const { data, horario, usuarioId } = req.body;
+        if (!data || !horario || !usuarioId)
+            return res.status(400).json({mensagem: "Todos os campos são obrigatórios."})
         const id = req.params.id;
 
         try {
-            await Checkins.update(checkins, id);
+            const checkin = new Checkins({id, data, horario, usuarioId});
+            await Checkins.update(checkin);
             res.status(201).json({mensagem: "Checkin atualizado com sucesso!"});
         } catch (error) {
             res.status(406).json({mensagem: "Erro ao atualizar checkin.", detalhes: error});

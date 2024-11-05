@@ -23,10 +23,13 @@ class AtividadeController {
 
     //INSERE ELEMENTOS
     async store(req, res) {
-        const { nome = null, descricao = null } = req.body;
+        const { nome, descricao = null } = req.body;
+        if (!nome)
+            return res.status(400).json({mensagem: "O campo 'Nome' é obrigatório."});
 
         try {
-            let id = await Atividade.save(nome, descricao);
+            const atividade = new Atividade({nome, descricao});
+            let id = await Atividade.save(atividade);
             res.status(201).json({mensagem: "Atividade inserida com sucesso!", "id": id});
         } catch (error) {
             res.status(406).json({mensagem: "Erro ao inserir atividade.", detalhes: error});
@@ -35,11 +38,14 @@ class AtividadeController {
 
     //ATUALIZA ELEMENTOS
     async update(req, res) {
-        const { nome = null, descricao = null } = req.body;
+        const { nome, descricao = null } = req.body;
+        if (!nome)
+            return res.status(400).json({mensagem: "O campo 'Nome' é obrigatório."});
         const id = req.params.id;
 
         try {
-            await Atividade.update(nome, descricao, id);
+            const atividade = new Atividade({id, nome, descricao});
+            await Atividade.update(atividade);
             res.status(201).json({mensagem: "Atividade atualizada com sucesso!"});
         } catch (error) {
             res.status(406).json({mensagem: "Erro ao atualizar atividade.", detalhes: error});

@@ -23,10 +23,13 @@ class InstituicaoController {
 
     //INSERE ELEMENTOS
     async store(req, res) {
-        const { cnpj = null, nomeinstituicao = null, pesResp = null } = req.body;
+        const { nome, cnpj = null, pesResponsavel = null } = req.body;
+        if (!nome)
+            return res.status(400).json({mensagem: "O campo 'Nome' é obrigatório."});
 
         try {
-            let id = await Instituicao.save(cnpj, nomeinstituicao, pesResp);
+            const instituicao = new Instituicao({nome, cnpj, pesResponsavel});
+            let id = await Instituicao.save(instituicao);
             res.status(201).json({mensagem: "Instituição inserida com sucesso!", "id": id});
         } catch (error) {
             res.status(406).json({mensagem: "Erro ao inserir instituição.", detalhes: error});
@@ -35,11 +38,14 @@ class InstituicaoController {
 
     //ATUALIZA ELEMENTOS
     async update(req, res) {
-        const { cnpj = null, nomeinstituicao = null, pesResp = null } = req.body;
+        const { nome, cnpj = null, pesResponsavel = null } = req.body;
+        if (!nome)
+            return res.status(400).json({mensagem: "O campo 'Nome' é obrigatório."});
         const id = req.params.id;
 
         try {
-            await Instituicao.update(cnpj, nomeinstituicao, pesResp);
+            const instituicao = new Instituicao({id, nome, cnpj, pesResponsavel});
+            await Instituicao.update(instituicao);
             res.status(201).json({mensagem: "Instituição atualizada com sucesso!"});
         } catch (error) {
             res.status(406).json({mensagem: "Erro ao atualizar instituição.", detalhes: error});

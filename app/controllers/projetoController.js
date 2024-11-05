@@ -23,10 +23,13 @@ class ProjetoController {
 
     //INSERE ELEMENTOS
     async store(req, res) {
-        const { nome = null, areapesquisa = null, tipoprojeto = null, descricao = null } = req.body;
+        const { nome, areapesquisa = null, tipoprojeto, descricao = null } = req.body;
+        if (!nome || !tipoprojeto)
+            return res.status(400).json({mensagem: "Os campos 'Nome' e 'Tipo Projeto' são obrigatórios."});
 
         try {
-            let id = await Projeto.save(nome, areapesquisa, tipoprojeto, descricao);
+            const projeto = new Projeto({nome, areapesquisa, tipoprojeto, descricao});
+            let id = await Projeto.save(projeto);
             res.status(201).json({mensagem: "Projeto inserido com sucesso!", "id": id});
         } catch (error) {
             res.status(406).json({mensagem: "Erro ao inserir projeto.", detalhes: error});
@@ -35,11 +38,14 @@ class ProjetoController {
 
     //ATUALIZA ELEMENTOS
     async update(req, res) {
-        const { nome = null, areapesquisa = null, tipoprojeto = null, descricao = null } = req.body;
+        const { nome, areapesquisa = null, tipoprojeto, descricao = null } = req.body;
+        if (!nome || !tipoprojeto)
+            return res.status(400).json({mensagem: "Os campos 'Nome' e 'Tipo Projeto' são obrigatórios."});
         const id = req.params.id;
 
         try {
-            await Projeto.update(nome, areapesquisa, tipoprojeto, descricao, id);
+            const projeto = new Projeto({id, nome, areapesquisa, tipoprojeto});
+            await Projeto.update(projeto);
             res.status(201).json({mensagem: "Projeto atualizado com sucesso!"});
         } catch (error) {
             res.status(406).json({mensagem: "Erro ao atualizar projeto.", detalhes: error})

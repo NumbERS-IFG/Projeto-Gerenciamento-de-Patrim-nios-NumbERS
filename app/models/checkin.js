@@ -1,36 +1,45 @@
 const db = require("../database/conexaoBD");
 
 class Checkins {
-    constructor(checkinsId, usuarioId, data, hora) {
-        this.checkinsId = checkinsId;
-        this.usuarioId = usuarioId;
+    constructor({checkinId, usuarioId, data, horario}) {
+        this.checkinId = checkinId;
         this.data = data;
-        this.hora = hora;
+        this.horario = horario;
+        this.usuarioId = usuarioId;
     }
 
     static async findAll() {
-        let sql = "SELECT * FROM checkins";
+        let sql = "SELECT c.*, u.* FROM checkins c, usuarios u WHERE c.usuario_id = u.usuario_id";
         return await db.manyOrNone(sql);
     }
 
     static async findById(id) {
-        let sql = "SELECT * FROM checkins WHERE id_checkins = $1";
+        let sql = "SELECT c.*, u.* FROM checkins c, usuarios u WHERE c.usuario_id = u.usuario_id AND checkin_id = $1";
         return await db.oneOrNone(sql, id);
     }
 
-    static async save(usuarioId, data, hora){
-        let sql = "INSERT INTO checkins (usuarioId, data, hora) VALUES ($1, $2, $3,) RETURNING id_checkins";
-        let result = await db.oneOrNone(sql, [usuarioId, data, hora]);
+    static async save(checkin){
+        let sql = "INSERT INTO checkins (dataa, horario, usuario_id) VALUES ($1, $2, $3,) RETURNING checkin_id";
+        let result = await db.oneOrNone(sql, [
+            checkin.data,
+            checkin.horario,
+            checkin.usuarioId
+        ]);
         return result;
     }
 
-    static async update(usuarioId, data, hora, id){
-        let sql = "UPDATE checkins SET usuaroId = $1, data = $2, hora = $3 WHERE id_checkins = $4";
-        await db.oneOrNone(sql, [usuarioId, data, hora, id]);
+    static async update(checkin){
+        let sql = "UPDATE checkins SET dataa = $1, horario = $2, usuario_id = $3 WHERE checkin_id = $4";
+        await db.oneOrNone(sql, [
+            checkin.data,
+            checkin.horario,
+            checkin.usuarioId,
+            checkin.checkinId
+        ]);
     }
 
     static async delete(id) {
-        let sql = "DELETE FROM checkins WHERE id_checkins = $1";
+        let sql = "DELETE FROM checkins WHERE checkin_id = $1";
         await db.oneOrNone(sql, id);
     }
 }

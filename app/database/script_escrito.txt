@@ -1,0 +1,160 @@
+CREATE TABLE IF NOT EXISTS cargos (
+	cargo_id SERIAL,
+	cargo varchar(40) not null,
+	nivelAcesso varchar(40) not null,
+	PRIMARY KEY (cargo_id)
+);
+
+CREATE TABLE IF NOT EXISTS usuarios (
+	usuario_id SERIAL,
+	nome varchar (40) not null,
+	sobrenome varchar (40) not null,
+	matricula varchar (15) not null,
+	senha varchar (100) not null,
+	email varchar (255),
+	cpf varchar (11),
+	cargo_id int not null,
+	PRIMARY KEY (usuario_id),
+	FOREIGN KEY (cargo_id) REFERENCES cargos(cargo_id)
+);
+
+CREATE TABLE IF NOT EXISTS situacoes (
+	situacao_id SERIAL,
+	situacao varchar (100) not null,
+	PRIMARY KEY (situacao_id)
+);
+
+CREATE TABLE IF NOT EXISTS condicoes (
+	condicao_id SERIAL,
+	condicao varchar (100) not null,
+	PRIMARY KEY (condicao_id)
+);
+
+CREATE TABLE IF NOT EXISTS categorias (
+	categoria_id SERIAL,
+	categoria varchar (100) not null,
+	PRIMARY KEY (categoria_id)
+);
+
+CREATE TABLE IF NOT EXISTS subcategorias (
+	subcategoria_id SERIAL,
+	subcategoria varchar (100) not null,
+	categoria_id int not null,
+	PRIMARY KEY (subcategoria_id),
+	FOREIGN KEY (categoria_id) REFERENCES categorias(categoria_id)
+);
+
+CREATE TABLE IF NOT EXISTS patrimonios (
+	patrimonio_id SERIAL,
+	nome varchar (100) not null,
+	valor_estimado float not null,
+	descricao varchar (500),
+	categoria_id int not null,
+	PRIMARY KEY (patrimonio_id),
+	FOREIGN KEY (categoria_id) REFERENCES categorias(categoria_id)
+);
+
+CREATE TABLE IF NOT EXISTS itens_patrimonio (
+	item_patrimonio_id SERIAL,
+	patrimonio_id int not null,
+	situacao_id int not null,
+	condicao_id int not null,
+	PRIMARY KEY (item_patrimonio_id),
+	FOREIGN KEY (patrimonio_id) REFERENCES patrimonios(patrimonio_id),
+	FOREIGN KEY (situacao_id) REFERENCES situacoes(situacao_id),
+	FOREIGN KEY (condicao_id) REFERENCES condicoes(condicao_id)
+);
+
+CREATE TABLE IF NOT EXISTS emprestimos (
+	emprestimo_id SERIAL,
+	usuario_responsavel_id int not null,
+	item_patrimonio_id int not null,
+	usuario_id int not null,
+	data_emprestimo date not null,
+	data_devolucao date not null,
+	PRIMARY KEY (emprestimo_id, usuario_responsavel_id, item_patrimonio_id, usuario_id),
+	FOREIGN KEY (usuario_responsavel_id) REFERENCES usuarios(usuario_id),
+	FOREIGN KEY (item_patrimonio_id) REFERENCES itens_patrimonio(item_patrimonio_id),
+	FOREIGN KEY (usuario_id) REFERENCES usuarios(usuario_id)
+);
+
+CREATE TABLE IF NOT EXISTS skills (
+	skill_id SERIAL,
+	skill varchar (50) not null,
+	PRIMARY KEY (skill_id)
+);
+
+CREATE TABLE IF NOT EXISTS projetos (
+	projeto_id SERIAL,
+	nome varchar (200) not null,
+	area_pesquisa varchar (100),
+	tipo_projeto varchar(50) not null,
+	descricao varchar (500),
+	PRIMARY KEY (projeto_id)
+);
+
+CREATE TABLE IF NOT EXISTS atividades (
+	atividade_id SERIAL,
+	nome varchar (100) not null,
+	descricao varchar(500),
+	PRIMARY KEY (atividade_id)
+);
+
+CREATE TABLE IF NOT EXISTS instituicoes (
+	instituicao_id SERIAL,
+	nome varchar (100) not null,
+	cnpj varchar (14),
+	pes_responsavel varchar (100),
+	PRIMARY KEY (instituicao_id)
+);
+
+CREATE TABLE IF NOT EXISTS checkins (
+	checkin_id SERIAL,
+	dataa date not null,
+	horario time not null,
+	usuario_id int not null,
+	PRIMARY KEY (checkin_id),
+	FOREIGN KEY (usuario_id) REFERENCES usuarios(usuario_id)
+);
+
+CREATE TABLE IF NOT EXISTS possuiSkill (
+	skill_id int not null,
+	usuario_id int not null,
+	PRIMARY KEY (skill_id, usuario_id),
+	FOREIGN KEY (skill_id) REFERENCES skills(skill_id),
+	FOREIGN KEY (usuario_id) REFERENCES usuarios(usuario_id)
+);
+
+CREATE TABLE IF NOT EXISTS userProj (
+	usuario_id int not null,
+	projeto_id int not null,
+	funcao varchar (100) not null,
+	PRIMARY KEY (usuario_id, projeto_id),
+	FOREIGN KEY (usuario_id) REFERENCES usuarios(usuario_id),
+	FOREIGN KEY (projeto_id) REFERENCES projetos(projeto_id)
+);
+
+CREATE TABLE IF NOT EXISTS userAtiv (
+	atividade_id int not null,
+	usuario_id int not null,
+	funcao varchar (100) not null,
+	PRIMARY KEY (atividade_id, usuario_id)
+	FOREIGN KEY (atividade_id) REFERENCES atividades(atividade_id),
+	FOREIGN KEY (usuario_id) REFERENCES usuarios(usuario_id)
+);
+
+CREATE TABLE IF NOT EXISTS ativProj (
+	atividade_id int not null,
+	projeto_id int not null,
+	PRIMARY KEY (atividade_id, projeto_id),
+	FOREIGN KEY (atividade_id) REFERENCES atividades(atividade_id),
+	FOREIGN KEY (projeto_id) REFERENCES projetos(projeto_id)
+);
+
+CREATE TABLE IF NOT EXISTS parceiros (
+	instituicao_id int not null,
+	projeto_id int not null,
+	PRIMARY KEY (instituicao_id, projeto_id),
+	FOREIGN KEY (instituicao_id) REFERENCES i(atividade_id),
+	FOREIGN KEY (projeto_id) REFERENCES projetos(projeto_id)
+);

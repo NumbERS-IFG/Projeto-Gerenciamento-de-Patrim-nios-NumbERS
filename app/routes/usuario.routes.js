@@ -10,7 +10,7 @@ router.get('/', authController.authToken, usuarioController.index);
 //CONSULTA UM ELEMENTO PELO ID
 router.get('/show/:matricula', authController.authToken, usuarioController.show);
 //INSERE ELEMENTOS
-router.post('/register', authController.authToken, usuarioController.register);
+router.post('/register', usuarioController.register);
 //ATUALIZA ELEMENTOS
 router.put('/:id', authController.authToken, usuarioController.update);
 //ELIMINA ELEMENTOS

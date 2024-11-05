@@ -1,8 +1,8 @@
 const db = require("../database/conexaoBD");
 
 class Atividade {
-    constructor(ativId, nome, descricao) {
-        this.ativId = ativId;
+    constructor({atividadeId, nome, descricao}) {
+        this.atividadeId = atividadeId;
         this.nome = nome;
         this.descricao = descricao;
     }
@@ -13,23 +13,30 @@ class Atividade {
     }
 
     static async findById(id) {
-        let sql = "SELECT * FROM atividades WHERE id_atividade = $1";
+        let sql = "SELECT * FROM atividades WHERE atividade_id = $1";
         return await db.oneOrNone(sql, id);
     }
 
-    static async save(nome, descricao){
-        let sql = "INSERT INTO atividades (nome, descricao) VALUES ($1, $2) RETURNING id_atividade";
-        let result = await db.oneOrNone(sql, [nome, descricao]);
+    static async save(atividade){
+        let sql = "INSERT INTO atividades (nome, descricao) VALUES ($1, $2) RETURNING atividade_id";
+        let result = await db.oneOrNone(sql, [
+            atividade.nome,
+            atividade.descricao
+        ]);
         return result;
     }
 
-    static async update(nome, descricao, id){
-        let sql = "UPDATE atividades SET nome = $1, descricao = $2 WHERE id_atividade = $3";
-        await db.oneOrNone(sql, [nome, descricao, id]);
+    static async update(atividade){
+        let sql = "UPDATE atividades SET nome = $1, descricao = $2 WHERE atividade_id = $3";
+        await db.oneOrNone(sql, [
+            atividade.nome,
+            atividade.descricao,
+            atividade.atividadeId
+        ]);
     }
 
     static async delete(id) {
-        let sql = "DELETE FROM atividades WHERE id_atividade = $1";
+        let sql = "DELETE FROM atividades WHERE atividade_id = $1";
         await db.oneOrNone(sql, id);
     }
 }

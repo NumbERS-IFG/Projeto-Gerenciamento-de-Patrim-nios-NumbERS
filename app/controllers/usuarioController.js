@@ -26,16 +26,16 @@ class UsuarioController {
 
     //REGISTRA USUÁRIOS
     async register(req, res) {
-        const { nome, sobrenome, matricula, senha, cargo, email = null, cpf = null } = req.body;
-        if (!nome || !sobrenome || !matricula || !senha)
-            return res.status(400).json({mensagem: "Os campos 'Nome', 'Sobrenome', 'Matricula' e 'Senha' são obrigatórios."});
+        const { nome, sobrenome, matricula, senha, email = null, cpf = null, cargoId } = req.body;
+        if (!nome || !sobrenome || !matricula || !senha || !cargoId)
+            return res.status(400).json({mensagem: "Os campos 'Nome', 'Sobrenome', 'Matricula', 'Senha' e 'Cargo' são obrigatórios."});
 
         const userExists = await Usuario.findByMatricula(matricula);
         if (userExists)
             return res.status(400).json({mensagem: "Usuário existente."});
 
         try {
-            const user = new Usuario({nome, sobrenome, matricula, senha, cargo, email, cpf});
+            const user = new Usuario({nome, sobrenome, matricula, senha, email, cpf, cargoId});
             user.senha = bcrypt.hashSync(user.senha, 10);
             let id = await Usuario.save(user);
             res.status(201).json({mensagem: "Usuário inserido com sucesso!", id: id});
@@ -46,11 +46,14 @@ class UsuarioController {
 
     //ATUALIZA ELEMENTOS
     async update(req, res) {
-        const { nome, sobrenome, matricula, senha, cargo, email = null, cpf = null } = req.body;
+        const { nome, sobrenome, matricula, senha, email = null, cpf = null, cargoId } = req.body;
+        if (!nome || !sobrenome || !matricula || !senha || !cargoId)
+            return res.status(400).json({mensagem: "Os campos 'Nome', 'Sobrenome', 'Matricula', 'Senha' e 'Cargo' são obrigatórios."});
         const id = req.params.id;
 
         try {
-            await Usuario.update(nome, sobrenome, matricula, senha, cargo, email, cpf, id);
+            const user = new Usuario({nome, sobrenome, matricula, senha, email, cpf, cargoId});
+            await Usuario.update(user, id);
             res.status(201).json({mensagem: "Usuário atualizado com sucesso!"});
         } catch (error) {
             res.status(406).json({mensagem: "Erro ao atualizar usuário.", detalhes: error})
