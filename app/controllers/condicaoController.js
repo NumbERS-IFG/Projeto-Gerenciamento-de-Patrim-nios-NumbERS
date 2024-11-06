@@ -23,7 +23,9 @@ class CondicaoController {
 
     //INSERE ELEMENTOS
     async store(req, res) {
-        const { condicao = null } = req.body;
+        const { condicao } = req.body;
+        if (!condicao)
+            return res.status(400).json({mensagem: "Todos os campos são obrigatórios."});
 
         try {
             let id = await Condicao.save(condicao);
@@ -35,7 +37,9 @@ class CondicaoController {
 
     //ATUALIZA ELEMENTOS
     async update(req, res) {
-        const { condicao = null } = req.body;
+        const { condicao } = req.body;
+        if (!condicao)
+            return res.status(400).json({mensagem: "Todos os campos são obrigatórios."});
         const id = req.params.id;
 
         try {
@@ -48,10 +52,8 @@ class CondicaoController {
 
     //ELIMINA ELEMENTOS
     async delete(req, res) {
-        const id = req.params.id;
-
         try {
-            await Condicao.delete(id);
+            await Condicao.delete(req.params.id);
             res.status(200).json({mensagem: "Condição excluída com sucesso!"});
         } catch (error) {
             res.status(406).json({mensagem: "Erro ao excluir condição", detalhes: error});

@@ -23,7 +23,9 @@ class CategoriaController {
 
     //INSERE ELEMENTOS
     async store(req, res) {
-        const { categoria = null } = req.body;
+        const { categoria } = req.body;
+        if (!categoria)
+            return res.status(400).json({mensagem: "Todos os campos são obrigatórios."});
 
         try {
             let id = await Categoria.save(categoria);
@@ -35,7 +37,9 @@ class CategoriaController {
 
     //ATUALIZA ELEMENTOS
     async update(req, res) {
-        const { categoria = null } = req.body;
+        const { categoria } = req.body;
+        if (!categoria)
+            return res.status(400).json({mensagem: "Todos os campos são obrigatórios."});
         const id = req.params.id;
 
         try {
@@ -48,10 +52,8 @@ class CategoriaController {
 
     //ELIMINA ELEMENTOS
     async delete(req, res) {
-        const id = req.params.id;
-
         try {
-            await Categoria.delete(id);
+            await Categoria.delete(req.params.id);
             res.status(200).json({mensagem: "Categoria excluída com sucesso!"});
         } catch (error) {
             res.status(406).json({mensagem: "Erro ao excluir categoria", detalhes: error});

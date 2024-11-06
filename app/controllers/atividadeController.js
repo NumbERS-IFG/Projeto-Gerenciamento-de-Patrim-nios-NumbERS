@@ -40,7 +40,7 @@ class AtividadeController {
     async update(req, res) {
         const { nome, descricao = null } = req.body;
         if (!nome)
-            return res.status(400).json({mensagem: "O campo 'Nome' é obrigatório."});
+            return res.status(400).json({mensagem: "Os campos 'Id' e 'Nome' são obrigatório."});
         const id = req.params.id;
 
         try {
@@ -54,10 +54,8 @@ class AtividadeController {
 
     //ELIMINA ELEMENTOS
     async delete(req, res) {
-        const id = req.params.id;
-
         try {
-            await Atividade.delete(id);
+            await Atividade.delete(req.params.id);
             res.status(200).json({mensagem: "Atividade excluída com sucesso!"});
         } catch (error) {
             res.status(406).json({mensagem: "Erro ao excluir atividade", detalhes: error});

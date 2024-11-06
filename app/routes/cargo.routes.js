@@ -6,14 +6,14 @@ const cargoController = new CargoController();
 const authController = new AuthController();
 
 //CONSULTA TODOS ELEMENTOS
-router.get('/', authController.authToken, cargoController.index);
+router.get('/', authController.authToken, authController.authNivel, cargoController.index);
 //CONSULTA UM ELEMENTO PELO ID
-router.get('/show/:id', authController.authToken, cargoController.show);
+router.get('/show/:id', authController.authToken, authController.authNivel, cargoController.show);
 //INSERE ELEMENTOS
-router.post('/store', cargoController.store);
+router.post('/store', authController.authToken, authController.authNivel, cargoController.store);
 //ATUALIZA ELEMENTOS
-router.put('/:id', authController.authToken, cargoController.update);
+router.put('/:id', authController.authToken, authController.authNivel, cargoController.update);
 //ELIMINA ELEMENTOS
-router.delete('/delete/:id', authController.authToken, cargoController.delete);
+router.delete('/delete/:id', authController.authToken, authController.authNivel, cargoController.delete);
 
 module.exports = router;

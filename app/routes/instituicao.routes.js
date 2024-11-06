@@ -6,14 +6,14 @@ const instituicaoController = new InstituicaoController();
 const authController = new AuthController();
 
 //CONSULTA TODOS ELEMENTOS
-router.get('/', authController.authToken, instituicaoController.index);
+router.get('/', authController.authToken, authController.authNivel, instituicaoController.index);
 //CONSULTA UM ELEMENTO PELO ID
-router.get('/show/:id', authController.authToken, instituicaoController.show);
+router.get('/show/:id', authController.authToken, authController.authNivel, instituicaoController.show);
 //INSERE ELEMENTOS
-router.post('/store', authController.authToken, instituicaoController.store);
+router.post('/store', authController.authToken, authController.authNivel, instituicaoController.store);
 //ATUALIZA ELEMENTOS
-router.put('/:id', authController.authToken, instituicaoController.update);
+router.put('/:id', authController.authToken, authController.authNivel, instituicaoController.update);
 //ELIMINA ELEMENTOS
-router.delete('/delete/:id', authController.authToken, instituicaoController.delete);
+router.delete('/delete/:id', authController.authToken, authController.authNivel, instituicaoController.delete);
 
 module.exports = router;

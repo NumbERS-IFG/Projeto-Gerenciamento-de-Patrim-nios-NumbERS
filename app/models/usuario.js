@@ -23,7 +23,7 @@ class Usuario {
     }
 
     static async save(user){
-        let sql = "INSERT INTO usuarios (nome, sobrenome, matricula, senha, email, cargo, cpf) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING usuario_id";
+        let sql = "INSERT INTO usuarios (nome, sobrenome, matricula, senha, email, cpf, cargo_id) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING usuario_id";
         let result = await db.oneOrNone(sql, [
             user.nome,
             user.sobrenome,
@@ -37,7 +37,7 @@ class Usuario {
     }
 
     static async update(user, id){
-        let sql = "UPDATE usuarios SET nome = $1, sobrenome = $2, matricula = $3, senha = $4, email = $5, cpf = $6, cargoId = $7 WHERE usuario_id = $8";
+        let sql = "UPDATE usuarios SET nome = $1, sobrenome = $2, matricula = $3, senha = $4, email = $5, cpf = $6, cargo_id = $7 WHERE usuario_id = $8";
         await db.oneOrNone(sql, [
             user.nome,
             user.sobrenome,

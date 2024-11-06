@@ -8,9 +8,11 @@ class UsuarioController {
     async index(req, res) {
         try {
             let usuarios = await Usuario.findAll();
+            if (!usuarios)
+                return res.status(404).json({ mensagem: "Nenhum usuário encontrado." });
             return res.status(200).json(usuarios);
         } catch (error) {
-            res.status(404).json({mensagem: "Não foi possível consultar usuários.", detalhes: error});
+            res.status(500).json({mensagem: "Erro na conexão com o banco de dados.", detalhes: error});
         }
     }
 
@@ -18,15 +20,18 @@ class UsuarioController {
     async show(req, res) {
         try {
             let usuario = await Usuario.findByMatricula(req.params.matricula);
+            if (!usuario)
+                return res.status(404).json({ mensagem: "Usuário não encontrado." });
+
             return res.status(200).json(usuario);
         } catch (error) {
-            res.status(404).json({mensagem: "Não foi possível encontrar o usuário.", detalhes: error});
+            res.status(500).json({mensagem: "Erro na conexão com o banco de dados.", detalhes: error});
         }
     }
 
     //REGISTRA USUÁRIOS
     async register(req, res) {
-        const { nome, sobrenome, matricula, senha, email = null, cpf = null, cargoId } = req.body;
+        const { nome, sobrenome, matricula, senha, cargoId, email = null, cpf = null } = req.body;
         if (!nome || !sobrenome || !matricula || !senha || !cargoId)
             return res.status(400).json({mensagem: "Os campos 'Nome', 'Sobrenome', 'Matricula', 'Senha' e 'Cargo' são obrigatórios."});
 
@@ -46,7 +51,7 @@ class UsuarioController {
 
     //ATUALIZA ELEMENTOS
     async update(req, res) {
-        const { nome, sobrenome, matricula, senha, email = null, cpf = null, cargoId } = req.body;
+        const { nome, sobrenome, matricula, senha, cargoId, email = null, cpf = null } = req.body;
         if (!nome || !sobrenome || !matricula || !senha || !cargoId)
             return res.status(400).json({mensagem: "Os campos 'Nome', 'Sobrenome', 'Matricula', 'Senha' e 'Cargo' são obrigatórios."});
         const id = req.params.id;
@@ -62,10 +67,8 @@ class UsuarioController {
 
     //ELIMINA ELEMENTOS
     async delete(req, res) {
-        const id = req.params.id;
-
         try {
-            await Usuario.delete(id);
+            await Usuario.delete(req.params.id);
             res.status(200).json({mensagem: "Usuário excluído com sucesso!"});
         } catch (error) {
             res.status(406).json({mensagem: "Erro ao excluir usuário", detalhes: error});

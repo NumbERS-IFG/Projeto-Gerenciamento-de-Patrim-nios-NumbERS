@@ -1,5 +1,6 @@
 const Usuario = require("../models/usuario");
 const bcrypt = require("bcrypt");
+const permissoes = require('../routes/permissoes');
 
 const jwt = require("jsonwebtoken");
 
@@ -17,7 +18,7 @@ class AuthController {
         if (!samePassword)
             return res.status(400).json({mensagem: "Senha incorreta."});
 
-        const token = jwt.sign({id: user.usuarioId /*isso aqui não tá retornando*/, matricula: user.matricula}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "1h"});
+        const token = jwt.sign({id: user.usuarioId /*isso aqui não tá retornando*/, matricula: user.matricula, nivelAcesso: user.nivel_acesso}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "1h"});
         user.senha = undefined;
         res.status(200).json({ chaveAcesso: token, usuario: user });
     }
@@ -34,6 +35,34 @@ class AuthController {
             req.user = decoded;
             next();
         })
+    }
+
+    authNivel(req, res, next){
+        try {
+            const tokenHeader = req.headers['authorization'];
+            const token = tokenHeader && tokenHeader.split(' ')[1];
+
+            const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+            const caminhoAtual = req.originalUrl;
+            const nivelRequerido = permissoes[caminhoAtual];
+
+            console.log(`C. R.: ${caminhoAtual}`);
+            console.log(`N. A. U.: ${decoded.nivelAcesso}`);
+            console.log(`N. R.: ${nivelRequerido}`);
+
+            if (nivelRequerido === undefined) {
+                return res.status(403).json({ mensagem: "Permissão não configurada para esta rota." });
+            }
+
+            // Verifique se o nível de acesso do usuário é suficiente
+            if (decoded.nivelAcesso < nivelRequerido) {
+                return res.status(403).json({ mensagem: "Acesso negado" });
+            }
+
+            next();
+        } catch (error) {
+            return res.status(403).json({ mensagem: "Falha na autenticação", detalhes: error.message });
+        }
     }
 }
 

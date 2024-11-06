@@ -1,7 +1,7 @@
 const db = require("../database/conexaoBD");
 
 class Cargo {
-    constructor({cargoId, cargo, nivelAcesso}) {
+    constructor({ cargoId, cargo, nivelAcesso }) {
         this.cargoId = cargoId;
         this.cargo = cargo;
         this.nivelAcesso = nivelAcesso;
@@ -13,7 +13,7 @@ class Cargo {
     }
 
     static async findById(id) {
-        let sql = "SELECT * FROM cargos WHERE cargos_id = $1";
+        let sql = "SELECT * FROM cargos WHERE cargo_id = $1";
         return await db.oneOrNone(sql, id);
     }
 
@@ -31,12 +31,12 @@ class Cargo {
         await db.oneOrNone(sql, [
             cargo.cargo,
             cargo.nivelAcesso,
-
+            cargo.cargoId
         ]);
     }
 
     static async delete(id) {
-        let sql = "DELETE FROM cargos WHERE id_cargo = $1";
+        let sql = "DELETE FROM cargos WHERE cargo_id = $1";
         await db.oneOrNone(sql, id);
     }
 }

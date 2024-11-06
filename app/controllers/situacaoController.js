@@ -23,7 +23,9 @@ class SituacaoController {
 
     //INSERE ELEMENTOS
     async store(req, res) {
-        const { situacao = null } = req.body;
+        const { situacao } = req.body;
+        if (!situacao)
+            return res.status(400).json({mensagem: "Todos os campos são obrigatórios."})
 
         try {
             let id = await Situacao.save(situacao);
@@ -35,7 +37,9 @@ class SituacaoController {
 
     //ATUALIZA ELEMENTOS
     async update(req, res) {
-        const { situacao = null } = req.body;
+        const { situacao } = req.body;
+        if (!situacao)
+            return res.status(400).json({mensagem: "Todos os campos são obrigatórios."})
         const id = req.params.id;
 
         try {
@@ -48,10 +52,8 @@ class SituacaoController {
 
     //ELIMINA ELEMENTOS
     async delete(req, res) {
-        const id = req.params.id;
-
         try {
-            await Situacao.delete(id);
+            await Situacao.delete(req.params.id);
             res.status(200).json({mensagem: "Situação excluída com sucesso!"});
         } catch (error) {
             res.status(406).json({mensagem: "Erro ao excluir situação", detalhes: error});

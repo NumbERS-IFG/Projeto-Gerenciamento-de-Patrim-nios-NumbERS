@@ -54,10 +54,8 @@ class CheckinsController {
 
     //ELIMINA ELEMENTOS
     async delete(req, res) {
-        const id = req.params.id;
-
         try {
-            await Checkins.delete(id);
+            await Checkins.delete(req.params.id);
             res.status(200).json({mensagem: "Checkin excluído com sucesso!"});
         } catch (error) {
             res.status(406).json({mensagem: "Erro ao excluir checkin", detalhes: error});

@@ -23,7 +23,9 @@ class SkillController {
 
     //INSERE ELEMENTOS
     async store(req, res) {
-        const { skill = null } = req.body;
+        const { skill } = req.body;
+        if (!skill)
+            return res.status(400).json({mensagem: "Todos os campos são obrigatórios."})
 
         try {
             let id = await Skill.save(skill);
@@ -35,7 +37,9 @@ class SkillController {
 
     //ATUALIZA ELEMENTOS
     async update(req, res) {
-        const { skill = null } = req.body;
+        const { skill } = req.body;
+        if (!skill)
+            return res.status(400).json({mensagem: "Todos os campos são obrigatórios."})
         const id = req.params.id;
 
         try {
@@ -48,10 +52,8 @@ class SkillController {
 
     //ELIMINA ELEMENTOS
     async delete(req, res) {
-        const id = req.params.id;
-
         try {
-            await Skill.delete(id);
+            await Skill.delete(req.params.id);
             res.status(200).json({mensagem: "Skill excluída com sucesso!"});
         } catch (error) {
             res.status(406).json({mensagem: "Erro ao excluir skill", detalhes: error});

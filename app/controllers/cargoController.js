@@ -54,10 +54,8 @@ class CargoController {
 
     //ELIMINA ELEMENTOS
     async delete(req, res) {
-        const id = req.params.id;
-
         try {
-            await Cargo.delete(id);
+            await Cargo.delete(req.params.id);
             res.status(200).json({mensagem: "Cargo excluído com sucesso!"});
         } catch (error) {
             res.status(406).json({mensagem: "Erro ao excluir cargo", detalhes: error});
