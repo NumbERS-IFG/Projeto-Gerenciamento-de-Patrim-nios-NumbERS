@@ -6,7 +6,7 @@ const situacaoController = new SituacaoController();
 const authController = new AuthController();
 
 //CONSULTA TODOS ELEMENTOS
-router.get('/', authController.authToken, authController.authNivel, situacaoController.index);
+router.get('/home', authController.authToken, authController.authNivel, situacaoController.index);
 //CONSULTA UM ELEMENTO PELO ID
 router.get('/show/:id', authController.authToken, authController.authNivel, situacaoController.show);
 //INSERE ELEMENTOS

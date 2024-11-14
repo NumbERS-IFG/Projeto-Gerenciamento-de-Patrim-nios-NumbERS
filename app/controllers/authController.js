@@ -43,12 +43,8 @@ class AuthController {
             const token = tokenHeader && tokenHeader.split(' ')[1];
 
             const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-            const caminhoAtual = req.originalUrl;
+            const caminhoAtual = req.originalUrl.replace(/\/\d+$/, '/');
             const nivelRequerido = permissoes[caminhoAtual];
-
-            console.log(`C. R.: ${caminhoAtual}`);
-            console.log(`N. A. U.: ${decoded.nivelAcesso}`);
-            console.log(`N. R.: ${nivelRequerido}`);
 
             if (nivelRequerido === undefined) {
                 return res.status(403).json({ mensagem: "Permissão não configurada para esta rota." });

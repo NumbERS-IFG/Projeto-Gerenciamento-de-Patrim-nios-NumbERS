@@ -10,7 +10,7 @@ router.get('/', authController.authToken, authController.authNivel, cargoControl
 //CONSULTA UM ELEMENTO PELO ID
 router.get('/show/:id', authController.authToken, authController.authNivel, cargoController.show);
 //INSERE ELEMENTOS
-router.post('/store', authController.authToken, authController.authNivel, cargoController.store);
+router.post('/store', /*authController.authToken, authController.authNivel,*/ cargoController.store);
 //ATUALIZA ELEMENTOS
 router.put('/:id', authController.authToken, authController.authNivel, cargoController.update);
 //ELIMINA ELEMENTOS

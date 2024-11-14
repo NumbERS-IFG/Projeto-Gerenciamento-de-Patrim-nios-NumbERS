@@ -3,8 +3,8 @@ const db = require("../database/conexaoBD");
 class Cargo {
     constructor({ cargoId, cargo, nivelAcesso }) {
         this.cargoId = cargoId;
-        this.cargo = cargo;
-        this.nivelAcesso = nivelAcesso;
+        this.name = cargo;
+        this.nivel = nivelAcesso;
     }
 
     static async findAll() {
@@ -20,8 +20,8 @@ class Cargo {
     static async save(cargo){
         let sql = "INSERT INTO cargos (cargo, nivel_acesso) VALUES ($1, $2) RETURNING cargo_id";
         let result = await db.oneOrNone(sql, [
-            cargo.cargo,
-            cargo.nivelAcesso
+            cargo.name,
+            cargo.nivel
         ]);
         return result;
     }

@@ -6,7 +6,7 @@ const checkinsController = new CheckinsCheckins();
 const authController = new AuthController();
 
 //CONSULTA TODOS ELEMENTOS
-router.get('/', authController.authToken, authController.authNivel, checkinsController.index);
+router.get('/home', authController.authToken, authController.authNivel, checkinsController.index);
 //CONSULTA UM ELEMENTO PELO ID
 router.get('/show/:id', authController.authToken, authController.authNivel, checkinsController.show);
 //INSERE ELEMENTOS

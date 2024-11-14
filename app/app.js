@@ -1,4 +1,3 @@
-const bodyParser = require('body-parser');
 const atividade = require('./routes/atividade.routes');
 const categoria = require('./routes/categoria.routes');
 const condicao = require('./routes/condicao.routes');

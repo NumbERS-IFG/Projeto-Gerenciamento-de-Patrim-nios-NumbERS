@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS cargos (
 	cargo_id SERIAL,
 	cargo varchar(40) not null,
-	nivelAcesso varchar(40) not null,
+	nivel_acesso varchar(40) not null,
 	PRIMARY KEY (cargo_id)
 );
 
@@ -138,7 +138,7 @@ CREATE TABLE IF NOT EXISTS userAtiv (
 	atividade_id int not null,
 	usuario_id int not null,
 	funcao varchar (100) not null,
-	PRIMARY KEY (atividade_id, usuario_id)
+	PRIMARY KEY (atividade_id, usuario_id),
 	FOREIGN KEY (atividade_id) REFERENCES atividades(atividade_id),
 	FOREIGN KEY (usuario_id) REFERENCES usuarios(usuario_id)
 );
@@ -155,6 +155,6 @@ CREATE TABLE IF NOT EXISTS parceiros (
 	instituicao_id int not null,
 	projeto_id int not null,
 	PRIMARY KEY (instituicao_id, projeto_id),
-	FOREIGN KEY (instituicao_id) REFERENCES i(atividade_id),
+	FOREIGN KEY (instituicao_id) REFERENCES atividades(atividade_id),
 	FOREIGN KEY (projeto_id) REFERENCES projetos(projeto_id)
 );

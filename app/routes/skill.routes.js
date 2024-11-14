@@ -6,7 +6,7 @@ const skillController = new SkillController();
 const authController = new AuthController();
 
 //CONSULTA TODOS ELEMENTOS
-router.get('/', authController.authToken, authController.authNivel, skillController.index);
+router.get('/home', authController.authToken, authController.authNivel, skillController.index);
 //CONSULTA UM ELEMENTO PELO ID
 router.get('/show/:id', authController.authToken, authController.authNivel, skillController.show);
 //INSERE ELEMENTOS

@@ -6,7 +6,7 @@ const usuarioController = new UsuarioController();
 const authController = new AuthController();
 
 //CONSULTA TODOS ELEMENTOS
-router.get('/', authController.authToken, authController.authNivel, usuarioController.index);
+router.get('/home', authController.authToken, authController.authNivel, usuarioController.index);
 //CONSULTA UM ELEMENTO PELO ID
 router.get('/show/:matricula', authController.authToken, authController.authNivel, usuarioController.show);
 //INSERE ELEMENTOS
