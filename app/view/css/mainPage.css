@@ -1,0 +1,109 @@
+@media all and (min-width: 80em) {
+
+    body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: black;
+    }
+
+    .container {
+        display: grid;
+        grid-template-columns: auto;
+        grid-template-rows: 10vh auto 10vh;
+        margin: 0;
+    }
+
+    .container-top {
+        display: grid;
+        grid-template-columns: 25vw 25vw 25vw 25vw;
+        grid-template-rows: auto;
+        grid-column: 1 / -1;
+        grid-row: 1 / 2;
+        background-color: deepskyblue;
+        margin: 0;
+    }
+
+    .container-top-name {
+        grid-column: 1 / 2;
+        grid-row: 1 / 2;
+        margin: auto;
+    }
+
+    .container-top-name-pageTitle {}
+
+    .container-top-login {
+        grid-column: 4 / 5;
+        grid-row: 1 / 2;
+        margin: auto;
+    }
+
+    .container-top-login-button {
+        background-color: whitesmoke;
+        width: 5vw;
+        height: 5vh;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .container-top-login-button:hover {
+        background-color: darkgray;
+    }
+
+    .container-main {
+        display: grid;
+        grid-template-columns: 25vw 25vw 25vw 25vw;
+        grid-template-rows: 25vh 25vh 25vh 25vh;
+        grid-column: 1 / -1;
+        grid-row: 2 / 3;
+        color: white;
+    }
+
+    .container-main-main {
+        grid-column: 1 / -1;
+        grid-row: 1 / 2;
+        margin: auto;
+    }
+
+    .container-main-main-h1 {
+        text-align: center;
+    }
+
+    .container-main-main-p {
+        text-align: center;
+    }
+
+    .container-main-item {
+        margin: auto;
+    }
+
+    .container-main-item-button {
+        width: 20vw;
+        height: 20vh;
+        background-color: black;
+        color: white;
+        border: 1px solid deepskyblue;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    .container-main-item-button:hover {
+        background-color: darkslategray;
+    }
+
+    .container-main-item-button-icon {}
+
+    .container-main-item-button-name {}
+
+    .container-foot {
+        grid-column: 1 / -1;
+        grid-row: 3 / -1;
+        background-color: deepskyblue;
+        align-content: center;
+    }
+
+    .container-foot-text {
+        text-align: center;
+    }
+
+}

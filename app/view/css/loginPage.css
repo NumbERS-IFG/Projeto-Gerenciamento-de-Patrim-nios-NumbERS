@@ -1,0 +1,78 @@
+@media all and (min-width: 80em) {
+
+    body {
+        margin: 0;
+        background-color: black;
+    }
+
+    .container {
+        display: grid;
+        grid-template-columns: 50vw 50vw;
+        grid-template-rows: 100vh;
+    }
+
+    .container-background {
+        grid-column: 1 / 2;
+        grid-row: 1 / -1;
+        background-image: url("./images/numbersLogo.jpeg");
+        background-size: cover;
+        background-position-x: center;
+        background-position-y: center;
+    }
+
+    .container-form {
+        grid-column: 2 / 3;
+    }
+
+    .container-form-login {
+        width: 50vw;
+        max-width: 40vw;
+        margin: 35vh auto;
+    }
+
+    .container-login-form-group {
+        width: fit-content;
+        margin: 2vh auto;
+        align-content: center;
+    }
+
+    .control-label {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 1.5em;
+        color: white;
+    }
+
+    .control-input {
+        border: 1px deepskyblue solid;
+        border-radius: 0.4em;
+        padding: 12px;
+        width: 30vw;
+        margin: 1vh 0;
+    }
+
+    .login-btn {
+        display: block;
+        background-color: deepskyblue;
+        width: 30vw;
+        margin: 4vh auto;
+        padding: 15px;
+        border: none;
+        border-radius: 2em;
+        color: white;
+        cursor: pointer;
+        font-size: 1.5em;
+    }
+
+    .forgetPassword {
+        text-align: center;
+    }
+
+    .linkForgetPassword {
+        color: white;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 1.5em;
+        cursor: pointer;
+        margin: auto;
+    }
+
+}
