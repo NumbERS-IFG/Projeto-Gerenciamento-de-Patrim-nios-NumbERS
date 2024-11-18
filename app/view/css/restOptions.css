@@ -36,13 +36,13 @@
         font-size: 2em;
     }
 
-    .container-top-login {
+    .container-top-back {
         grid-column: 4 / 5;
         grid-row: 1 / 2;
         margin: auto;
     }
 
-    .container-top-login-button {
+    .container-top-back-button {
         background-color: whitesmoke;
         width: 5vw;
         height: 5vh;
@@ -53,14 +53,14 @@
         font-size: 1em;
     }
 
-    .container-top-login-button:hover {
+    .container-top-back-button:hover {
         background-color: lightskyblue;
     }
 
     .container-main {
         display: grid;
-        grid-template-columns: 25vw 25vw 25vw 25vw;
-        grid-template-rows: 25vh 25vh 25vh 25vh;
+        grid-template-columns: 50vw 50vw;
+        grid-template-rows: 20vh 40vh 40vh;
         grid-column: 1 / -1;
         grid-row: 2 / 3;
     }
@@ -75,32 +75,38 @@
         text-align: center;
     }
 
-    .container-main-main-p {
-        text-align: center;
-    }
-
-    .container-main-item {
+    .container-main-options {
         margin: auto;
+        border: 1px solid black;
+        border-radius: 8px;
+        padding: 3em;
     }
 
-    .container-main-item-button {
-        width: 20vw;
-        height: 20vh;
-        background-color: white;
-        border: 1px solid deepskyblue;
+    .container-main-options-button {
+        width: 30vw;
+        height: 5vh;
+        background-color: black;
+        color: white;
+        border: none;
         border-radius: 10px;
         cursor: pointer;
         font-family: Arial, Helvetica, sans-serif;
         font-size: 1em;
     }
 
-    .container-main-item-button:hover {
-        background-color: whitesmoke;
+    .container-main-options-button:hover {
+        background-color: darkslategray;
     }
 
-    .container-main-item-button-icon {}
+    .container-main-options-icon {
+        display: inline;
+    }
 
-    .container-main-item-button-name {}
+    .container-main-options-name {
+        display: inline;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 1.5em;
+    }
 
     .container-foot {
         grid-column: 1 / -1;

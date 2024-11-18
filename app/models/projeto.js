@@ -10,17 +10,17 @@ class Projeto {
     }
 
     static async findAll() {
-        let sql = "SELECT * FROM projetos";
+        let sql = "SELECT * FROM projeto";
         return await db.manyOrNone(sql);
     }
 
     static async findById(id) {
-        let sql = "SELECT * FROM projetos WHERE projeto_id = $1";
+        let sql = "SELECT * FROM projeto WHERE projeto_id = $1";
         return await db.oneOrNone(sql, id);
     }
 
     static async save(projeto){
-        let sql = "INSERT INTO projetos (nome, area_pesquisa, tipo_projeto, descricao) VALUES ($1, $2, $3, $4) RETURNING projeto_id";
+        let sql = "INSERT INTO projeto (nome, area_pesquisa, tipo_projeto, descricao) VALUES ($1, $2, $3, $4) RETURNING projeto_id";
         let result = await db.oneOrNone(sql, [
             projeto.nome,
             projeto.areaPesquisa,
@@ -31,7 +31,7 @@ class Projeto {
     }
 
     static async update(projeto){
-        let sql = "UPDATE projetos SET nome = $1, area_pesquisa = $2, tipo_projeto = $3, descricao = $4 WHERE projeto_id = $5";
+        let sql = "UPDATE projeto SET nome = $1, area_pesquisa = $2, tipo_projeto = $3, descricao = $4 WHERE projeto_id = $5";
         await db.oneOrNone(sql, [
             projeto.nome,
             projeto.areaPesquisa,
@@ -42,7 +42,7 @@ class Projeto {
     }
 
     static async delete(id) {
-        let sql = "DELETE FROM projetos WHERE projeto_id = $1";
+        let sql = "DELETE FROM projeto WHERE projeto_id = $1";
         await db.oneOrNone(sql, id);
     }
 }

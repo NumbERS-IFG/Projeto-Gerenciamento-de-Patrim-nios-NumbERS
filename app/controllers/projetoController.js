@@ -7,7 +7,7 @@ class ProjetoController {
             let projetos = await Projeto.findAll();
             return res.status(200).json(projetos);
         } catch (error) {
-            res.status(404).json({mensagem: "Não foi possível consultar projetos.", detalhes: error});
+            res.status(404).json({mensagem: "Não foi possível consultar projeto.", detalhes: error});
         }
     }
 
