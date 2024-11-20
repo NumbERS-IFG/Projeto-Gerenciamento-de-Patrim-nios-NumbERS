@@ -59,8 +59,8 @@
 
     .container-main {
         display: grid;
-        grid-template-columns: 50vw 50vw;
-        grid-template-rows: 20vh 40vh 40vh;
+        grid-template-columns: auto;
+        grid-template-rows: 20vh 70vh;
         grid-column: 1 / -1;
         grid-row: 2 / 3;
     }
@@ -71,19 +71,43 @@
         margin: auto;
     }
 
-    .container-main-main-h1 {
-        text-align: center;
-    }
-
-    .container-main-options {
+    .container-main-form {
+        border: 1px solid lightgray;
+        border-radius: 15px;
+        width: 50vw;
         margin: auto;
-        border: 1px solid black;
-        border-radius: 8px;
-        padding: 3em;
     }
 
-    .container-main-options-button {
-        width: 30vw;
+    .container-main-form-name {
+        margin: 2vh 2vw 0;
+    }
+
+    .container-main-form-description {
+        margin: 1vh 2vw;
+        color: gray;
+    }
+
+    .container-main-form-group {
+        width: fit-content;
+        margin: 2vh auto;
+        align-content: center;
+    }
+
+    .control-label {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 1em;
+    }
+
+    .control-input {
+        border: 1px black solid;
+        border-radius: 0.4em;
+        padding: 12px;
+        width: 40vw;
+        margin: 1vh auto;
+    }
+
+    .container-main-form-btn {
+        width: 41.5vw;
         height: 5vh;
         background-color: black;
         color: white;
@@ -92,17 +116,8 @@
         cursor: pointer;
         font-family: Arial, Helvetica, sans-serif;
         font-size: 1em;
-    }
-
-    .container-main-options-button:hover {
-        background-color: darkslategray;
-    }
-
-    .container-main-options-name {
-        display: inline;
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: 1.5em;
-        margin-left: 1vw;
+        display: block;
+        margin: auto auto 2vh;
     }
 
     .container-foot {
