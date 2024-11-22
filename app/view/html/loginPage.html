@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - NumbERS</title>
     <link rel="stylesheet" href="../css/loginPage.css">
+    <script src="../script/login.js"></script>
   </head>
   <body>
     <div class="container">
@@ -12,7 +13,7 @@
       <div class="container-form">
         <div class="container-form-login">
           <img src="../css/images/logo-completa-preta.png" alt="Logo Completa Preta NumbERS" class="container-form-login-img">
-          <form method="post" accept-charset="utf-8">
+          <form method="post" accept-charset="utf-8" id="formLogin">
             <div class="container-login-form-group">
               <label class="control-label">Matricula</label><br>
               <input type="text" value="" name="Acesso[Matricula]" id="acessoMatricula" class="control-input">
@@ -22,7 +23,7 @@
               <label class="control-label">Senha</label><br>
               <input type="password" value="" name="Acesso[Senha]" id="acessoSenha" class="control-input">
             </div>
-            <button type="submit" class="login-btn">Entrar</button>
+            <button type="submit" class="login-btn" id="login-btn">Entrar</button>
             <p class="forgetPassword">
               <a class="linkForgetPassword" href="">Esqueceu a senha?</a>
             </p>

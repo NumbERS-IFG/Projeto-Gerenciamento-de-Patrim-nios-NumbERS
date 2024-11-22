@@ -9,18 +9,16 @@ const usuario = require('./routes/usuario.routes');
 const cargo = require('./routes/cargo.routes');
 const login = require('./routes/login.routes');
 const express = require('express');
-// const cors = require('cors');
-// const path = require('path');
+const cors = require('cors');
+const path = require('path');
 const app = express();
-//CAMINHO ABSOLUTO DO PROJETO
-// const __caminho = __dirname + '/';
 
 //INDICAÇÃO PARA O EXPRESS LER BODY COMO JSON
 app.use(express.json());
 //CONFIGURAÇÃO PARA ACEITAR DADOS DE QUALQUER FONTE
 app.use(cors());
-//CONFIGURAÇÃO DO CAMINHO PARA A PASTA RAIZ NO MIDDLEWARE EXPRESS.STATIC PARA ENTREGAR ARQUIVOS ESTÁTICOS
-// app.use(express.static(path.resolve(__caminho)));
+//CAMINHO A PASTA VIEW/HTML PARA SERVIR ARQUIVOS ESTÁTICOS
+app.use(express.static(path.join(__dirname, 'view')));
 
 //CONFIRAÇÃO DE ROTAS PARA AS PÁGINAS DESCRITAS A PARTIR DOS ARQUIVOS .ROUTES
 app.use('/atividade', atividade);
